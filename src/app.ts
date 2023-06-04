@@ -1,6 +1,10 @@
-import express, { Application, Request, Response, urlencoded } from 'express'
+import express, { Application, urlencoded } from 'express'
 import cors from 'cors'
+
+import globallErrorHandelars from './app/moddlewars/globallErrorHandelars'
+import { UserRoutes } from './app/modules/users/user.route'
 const app: Application = express()
+
 // const port = 5000
 
 app.use(cors())
@@ -9,8 +13,16 @@ app.use(cors())
 app.use(express.json())
 app.use(urlencoded({ extended: true }))
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!')
-})
+// applicaitons
+
+app.use('/api/v1/user', UserRoutes)
+
+// app.get('/', async (req: Request, res: Response, next: NextFunction) => {
+//   res.send('ora baba Error...')
+//   next()
+// })
+
+//global error...
+app.use(globallErrorHandelars)
 
 export default app
