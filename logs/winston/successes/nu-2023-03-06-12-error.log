@@ -1,0 +1,1 @@
+Sat Jun 03 2023 12 10 : 42 } [RM] error: faild to connected to data base The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
