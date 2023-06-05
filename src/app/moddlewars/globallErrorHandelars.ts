@@ -1,10 +1,17 @@
+/* eslint-disable no-console */
 import { ErrorRequestHandler } from 'express'
 import config from '../../config'
 import { IGenericErrorMessage } from '../../interfaces/error'
 import handelValidationError from '../../errors/handelValidationError'
-import ApiError from '../../errors/apierror'
+import { errorlogger } from '../../shared/logger'
+import ApiError from '../../errors/ApiError'
 
 const globallErrorHandelars: ErrorRequestHandler = (error, req, res, next) => {
+  // eslint-disable-next-line no-unused-expressions
+  config.env === 'development'
+    ? console.log('~~~globalErrorHandeler ~~', error)
+    : errorlogger.error('~~~globalErrorHandeler ~~', error)
+
   let statusCode = 500
   let message = 'somthing want wrong'
   let errorMessages: IGenericErrorMessage[] = []

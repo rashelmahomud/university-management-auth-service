@@ -18,8 +18,7 @@ app.use(urlencoded({ extended: true }))
 app.use('/api/v1/user', UserRoutes)
 
 // app.get('/', async (req: Request, res: Response, next: NextFunction) => {
-//   res.send('ora baba Error...')
-//   next()
+//   throw new Error('testing logger...')
 // })
 
 //global error...
