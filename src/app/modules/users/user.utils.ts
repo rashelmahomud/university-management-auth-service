@@ -1,18 +1,18 @@
-import { User } from './user.model'
+import { User } from './user.model';
 
 export const findUserLastId = async () => {
   const lastUser = await User.findOne({}, { id: 1, _id: 0 })
     .sort({
       createdAt: -1,
     })
-    .lean()
+    .lean();
 
-  return lastUser?.id
-}
+  return lastUser?.id;
+};
 
 export const genarateUserId = async () => {
-  const curentId = (await findUserLastId()) || (0).toString().padStart(5, '0')
+  const curentId = (await findUserLastId()) || (0).toString().padStart(5, '0');
 
-  const incrementedId = (parseInt(curentId) + 1).toString().padStart(5, '0')
-  return incrementedId
-}
+  const incrementedId = (parseInt(curentId) + 1).toString().padStart(5, '0');
+  return incrementedId;
+};
