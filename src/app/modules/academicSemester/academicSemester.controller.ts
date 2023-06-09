@@ -12,8 +12,6 @@ const createSemester = CatchAsync(
       academicSemesterData
     );
 
-    next();
-
     sendResponce(res, {
       //this code daynamically handel for have a sendResponce.ts file.
       statusCode: httpStatus.OK,
@@ -21,6 +19,7 @@ const createSemester = CatchAsync(
       message: 'create semester in successfully done',
       data: result,
     });
+    next();
   }
 );
 

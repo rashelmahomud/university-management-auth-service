@@ -9,7 +9,7 @@ const createUser: RequestHandler = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { user } = req.body;
     const result = await userService.createUser(user);
-    next();
+
     sendResponce(res, {
       //this code daynamically handel for have a sendResponce.ts file.
       statusCode: httpStatus.OK,
@@ -17,6 +17,7 @@ const createUser: RequestHandler = CatchAsync(
       message: 'create user in successfully done',
       data: result,
     });
+    next();
   }
 );
 export const userController = {

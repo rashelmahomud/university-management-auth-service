@@ -6,7 +6,7 @@ import {
 
 export const academicSemesterTitle: IAcademecSemesterTitles[] = [
   'Autumn',
-  'Summar',
+  'Summer',
   'Fall',
 ];
 
@@ -33,6 +33,6 @@ export const academicSemesterMonths: IAcademicSemesterMonth[] = [
 
 export const academicSemesterTitleCodeMapper: { [key: string]: string } = {
   Autumn: '01',
-  summer: '02',
+  Summer: '02',
   Fall: '03',
 };
