@@ -5,6 +5,7 @@ import sendResponce from '../../../shared/sendResponce';
 import httpStatus from 'http-status';
 import pick from '../../../shared/pick';
 import { pagenationFields } from '../../../conestent/pagenation';
+import { academicSemesterFilterAbleFields } from './academicSemester.constent';
 
 const createSemester = CatchAsync(
   //this file for try catch code have CatchAsync.ts file a
@@ -28,7 +29,7 @@ const createSemester = CatchAsync(
 //pagenation work for code>
 const getAllSemesters = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const filters = pick(req.query, ['searchTerm']); //search for this code
+    const filters = pick(req.query, academicSemesterFilterAbleFields); //search for this code
     const pagenationOptions = pick(req.query, pagenationFields);
 
     const result = await AcademicSemesterService.getAllSemesters(

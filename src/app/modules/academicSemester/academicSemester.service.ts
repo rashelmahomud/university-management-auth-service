@@ -1,6 +1,9 @@
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
-import { academicSemesterTitleCodeMapper } from './academicSemester.constent';
+import {
+  academicSemesterSharchAbleFields,
+  academicSemesterTitleCodeMapper,
+} from './academicSemester.constent';
 import {
   IAcademicSemester,
   IAcademicSemesterFiltes,
@@ -26,10 +29,9 @@ const getAllSemesters = async (
   filters: IAcademicSemesterFiltes, //search for this code
   pagenationOptions: IPagenationOption
 ): Promise<IGenericResponce<IAcademicSemester[]>> => {
-  const { searchTerm } = filters;
+  const { searchTerm, ...filtersData } = filters;
 
   //search for this code =========
-  const academicSemesterSharchAbleFields = ['title', 'code', 'year'];
   const andCondition = [];
 
   if (searchTerm) {
@@ -39,6 +41,16 @@ const getAllSemesters = async (
           $regex: searchTerm,
           $options: 'i',
         },
+      })),
+    });
+  }
+
+  //=============================^
+
+  if (Object.keys(filtersData).length) {
+    andCondition.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
       })),
     });
   }
