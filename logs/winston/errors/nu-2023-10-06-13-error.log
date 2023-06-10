@@ -1,0 +1,5 @@
+Sat Jun 10 2023 13 21 : 5 } [RM] error: Cast to number failed for value "i" (type string) at path "year" for model "AcademicSemester"
+Sat Jun 10 2023 13 43 : 50 } [RM] error: Cast to number failed for value "i" (type string) at path "year" for model "AcademicSemester"
+Sat Jun 10 2023 13 50 : 14 } [RM] error: Cast to number failed for value "i" (type string) at path "year" for model "AcademicSemester"
+Sat Jun 10 2023 13 54 : 39 } [RM] error: Cast to number failed for value "i" (type string) at path "year" for model "AcademicSemester"
+Sat Jun 10 2023 13 55 : 2 } [RM] error: Cast to number failed for value "i" (type string) at path "year" for model "AcademicSemester"

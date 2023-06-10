@@ -28,9 +28,11 @@ const createSemester = CatchAsync(
 //pagenation work for code>
 const getAllSemesters = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const filters = pick(req.query, ['searchTerm']); //search for this code
     const pagenationOptions = pick(req.query, pagenationFields);
 
     const result = await AcademicSemesterService.getAllSemesters(
+      filters,
       pagenationOptions
     );
 
