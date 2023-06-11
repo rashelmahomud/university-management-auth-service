@@ -50,20 +50,18 @@ const getAllSemesters = CatchAsync(
 //pagenation work for code ^
 
 ///single data get =================>
-const getSingleSemester = CatchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.id;
-    const result = await AcademicSemesterService.getSingleSemester(id);
+const getSingleSemester = CatchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await AcademicSemesterService.getSingleSemester(id);
 
-    sendResponce(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Semester retrative done',
-      data: result,
-    });
-    next();
-  }
-);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester retrative done',
+    data: result,
+  });
+  // next();
+});
 
 //===============^
 
