@@ -8,7 +8,7 @@ router.post('/', AcademicFacultyController.createFaculty);
 // router.get('/:id');
 // router.patch('/:id');
 
-// router.get('/');
+router.get('/', AcademicFacultyController.getAllSemesters);
 // router.delete('/:id');
 
 export const AcademicFacultyRoute = router;

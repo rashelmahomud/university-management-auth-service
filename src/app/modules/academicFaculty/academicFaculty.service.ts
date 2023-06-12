@@ -1,74 +1,71 @@
-// import { IPagenationOption } from '../../../interfaces/pagenations';
-// import { PagenationHelpers } from '../../../helpers/pagenationHelpers';
-// import { SortOrder } from 'mongoose';
-// import { IGenericResponce } from '../../../interfaces/common';
+import { IPagenationOption } from '../../../interfaces/pagenations';
+import { PagenationHelpers } from '../../../helpers/pagenationHelpers';
+import { SortOrder } from 'mongoose';
+import { IGenericResponce } from '../../../interfaces/common';
 import {
   IAcademicFaculty,
-  // IAcademicFacultyFiltes,
+  IAcademicFacultyFiltes,
 } from './academicFaculty.interface';
 import { AcademicFaculty } from './academicFacultyModel';
 // import { academicFacultySharchAbleFields } from './academicFaculty.constent';
 
 //pagination work for this code
-// const getAllFacultes = async (
-//   filters: IAcademicFacultyFiltes, //search for this code
-//   pagenationOptions: IPagenationOption
-// ): Promise<IGenericResponce<IAcademicFaculty[]>> => {
-//   const { searchTerm, ...filtersData } = filters;
-//   const { page, limit, skip, sortBy, sortOrder } =
-//     PagenationHelpers.calculatepagenation(pagenationOptions);
+const getAllFacultes = async (
+  filters: IAcademicFacultyFiltes, //search for this code
+  pagenationOptions: IPagenationOption
+): Promise<IGenericResponce<IAcademicFaculty[]>> => {
+  const { ...filtersData } = filters;
+  const { page, limit, skip, sortBy, sortOrder } =
+    PagenationHelpers.calculatepagenation(pagenationOptions);
 
-//   //search for this code =========
-//   const andCondition = [];
+  //search for this code =========
+  const andCondition = [];
 
-//   if (searchTerm) {
-//     andCondition.push({
-//       $or: academicFacultySharchAbleFields.map(field => ({
-//         [field]: {
-//           $regex: searchTerm,
-//           $options: 'i',
-//         },
-//       })),
-//     });
-//   }
+  // if (searchTerm) {
+  //   andCondition.push({
+  //     $or: academicFacultySharchAbleFields.map(field => ({
+  //       [field]: {
+  //         $regex: searchTerm,
+  //         $options: 'i',
+  //       },
+  //     })),
+  //   });
+  // }
 
-//   //=============================^
+  //=============================^
 
-//   if (Object.keys(filtersData).length) {
-//     andCondition.push({
-//       $and: Object.entries(filtersData).map(([field, value]) => ({
-//         [field]: value,
-//       })),
-//     });
-//   }
+  if (Object.keys(filtersData).length) {
+    andCondition.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
 
-//   // const { page, limit, skip, sortBy, sortOrder } =
-//   //   PagenationHelpers.calculatepagenation(pagenationOptions);
+  const sortCondition: { [key: string]: SortOrder } = {};
 
-//   const sortCondition: { [key: string]: SortOrder } = {};
+  if (sortBy && sortOrder) {
+    sortCondition[sortBy] = sortOrder;
+  }
 
-//   if (sortBy && sortOrder) {
-//     sortCondition[sortBy] = sortOrder;
-//   }
+  const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
 
-//   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
+  const result = await AcademicFaculty.find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit);
 
-//   const result = await AcademicFaculty.find(whereCondition)
-//     .sort(sortCondition)
-//     .skip(skip)
-//     .limit(limit);
+  const total = await AcademicFaculty.countDocuments();
 
-//   const total = await AcademicFaculty.countDocuments();
-
-//   return {
-//     meta: {
-//       page,
-//       limit,
-//       total,
-//     },
-//     data: result,
-//   };
-// };
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
+};
 //pagenation work for code ^
 
 const createFaculty = async (
@@ -80,5 +77,5 @@ const createFaculty = async (
 
 export const AcademicFacultyService = {
   createFaculty,
-  // getAllFacultes,
+  getAllFacultes,
 };
