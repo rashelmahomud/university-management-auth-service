@@ -27,6 +27,7 @@ const createFaculty = CatchAsync(
 
 //pagenation work for code>
 const getAllSemesters = CatchAsync(async (req: Request, res: Response) => {
+  //get all data
   const filters = pick(req.query, academicFacultyFilterAbleFields); //search for this code
   const pagenationOptions = pick(req.query, pagenationFields);
 
@@ -45,7 +46,22 @@ const getAllSemesters = CatchAsync(async (req: Request, res: Response) => {
 });
 //pagenation work for code ^
 
+//singlege faculty data get ==== >
+const getSingleFaculty = CatchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await AcademicFacultyService.getSingleFaculty(id);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'create Faculty in single data successfully done',
+    data: result,
+  });
+});
+
+//singlege faculty data get===^
+
 export const AcademicFacultyController = {
   createFaculty,
   getAllSemesters,
+  getSingleFaculty,
 };

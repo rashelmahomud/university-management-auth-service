@@ -68,6 +68,7 @@ const getAllFacultes = async (
 };
 //pagenation work for code ^
 
+//==========post data ======>
 const createFaculty = async (
   payload: IAcademicFaculty
 ): Promise<IAcademicFaculty | null> => {
@@ -75,7 +76,20 @@ const createFaculty = async (
   return result;
 };
 
+//===========post faculty data create ===^
+
+//-=====get singel data from database =====>
+
+const getSingleFaculty = async (
+  id: string
+): Promise<IAcademicFaculty | null> => {
+  const result = await AcademicFaculty.findById(id);
+  return result;
+};
+//==========get data from database single data===^
+
 export const AcademicFacultyService = {
   createFaculty,
   getAllFacultes,
+  getSingleFaculty,
 };
