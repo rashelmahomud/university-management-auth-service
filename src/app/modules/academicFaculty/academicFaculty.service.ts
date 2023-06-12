@@ -101,9 +101,15 @@ const updateFaculty = async (
 
 //==========update faculty data===========^
 
+const deleteFaculty = async (id: string): Promise<IAcademicFaculty | null> => {
+  const result = await AcademicFaculty.findByIdAndDelete(id);
+  return result;
+};
+
 export const AcademicFacultyService = {
   createFaculty,
   getAllFacultes,
   getSingleFaculty,
   updateFaculty,
+  deleteFaculty,
 };
