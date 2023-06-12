@@ -7,6 +7,7 @@ import {
   IAcademicFacultyFiltes,
 } from './academicFaculty.interface';
 import { AcademicFaculty } from './academicFacultyModel';
+import { academicFacultySharchAbleFields } from './academicFaculty.constent';
 // import { academicFacultySharchAbleFields } from './academicFaculty.constent';
 
 //pagination work for this code
@@ -14,23 +15,23 @@ const getAllFacultes = async (
   filters: IAcademicFacultyFiltes, //search for this code
   pagenationOptions: IPagenationOption
 ): Promise<IGenericResponce<IAcademicFaculty[]>> => {
-  const { ...filtersData } = filters;
+  const { searchTerm, ...filtersData } = filters;
   const { page, limit, skip, sortBy, sortOrder } =
     PagenationHelpers.calculatepagenation(pagenationOptions);
 
   //search for this code =========
   const andCondition = [];
 
-  // if (searchTerm) {
-  //   andCondition.push({
-  //     $or: academicFacultySharchAbleFields.map(field => ({
-  //       [field]: {
-  //         $regex: searchTerm,
-  //         $options: 'i',
-  //       },
-  //     })),
-  //   });
-  // }
+  if (searchTerm) {
+    andCondition.push({
+      $or: academicFacultySharchAbleFields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    });
+  }
 
   //=============================^
 
