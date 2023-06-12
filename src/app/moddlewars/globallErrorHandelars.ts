@@ -7,6 +7,7 @@ import { errorlogger } from '../../shared/logger';
 import ApiError from '../../errors/ApiError';
 import { ZodError } from 'zod';
 import handelZodError from '../../errors/handelZodError';
+import handelCastError from '../../errors/handelCastError';
 
 const globallErrorHandelars: ErrorRequestHandler = (error, req, res, next) => {
   // eslint-disable-next-line no-unused-expressions
@@ -25,6 +26,11 @@ const globallErrorHandelars: ErrorRequestHandler = (error, req, res, next) => {
     errorMessages = simpliedError.errorMessages;
   } else if (error instanceof ZodError) {
     const simpliedError = handelZodError(error);
+    statusCode = simpliedError.statusCode;
+    message = simpliedError.message;
+    errorMessages = simpliedError.errorMessages;
+  } else if (error?.name === 'CastError') {
+    const simpliedError = handelCastError(error);
     statusCode = simpliedError.statusCode;
     message = simpliedError.message;
     errorMessages = simpliedError.errorMessages;
