@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/', AcademicFacultyController.createFaculty);
 
 router.get('/:id', AcademicFacultyController.getSingleFaculty);
-// router.patch('/:id');
+router.patch('/:id', AcademicFacultyController.updateFaculy);
 
 router.get('/', AcademicFacultyController.getAllSemesters);
 // router.delete('/:id');
