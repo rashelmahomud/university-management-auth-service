@@ -80,9 +80,25 @@ const updateDepartment = CatchAsync(async (req: Request, res: Response) => {
 });
 //====database update from database ========^
 
+//==== delete data from database depertment ===========>
+const deleteDevelopment = CatchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await AcademicDepartmentService.deleteDevelopment(id);
+
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Data deleted succesfully from database',
+    data: result,
+  });
+});
+
+//==== delete data from database depertment ===========^
+
 export const AcademicDepartmentController = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
   updateDepartment,
+  deleteDevelopment,
 };

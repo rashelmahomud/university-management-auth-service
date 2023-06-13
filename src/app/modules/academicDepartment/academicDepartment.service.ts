@@ -111,9 +111,20 @@ const updateDepartment = async (
 
 //======get update data from database =======^
 
+//========delete from database data=========>
+
+const deleteDevelopment = async (id: string) => {
+  const result = await AcademicDepartment.findByIdAndDelete(id).populate(
+    'academicFaculty'
+  );
+  return result;
+};
+//========delete from database data=========^
+
 export const AcademicDepartmentService = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
   updateDepartment,
+  deleteDevelopment,
 };
