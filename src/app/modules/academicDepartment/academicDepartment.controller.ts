@@ -60,11 +60,29 @@ const getSingleDepartment = CatchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
 //==========get department single data ================^
+
+//====database update from database ========>
+const updateDepartment = CatchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const updateData = req.body;
+  const result = await AcademicDepartmentService.updateDepartment(
+    id,
+    updateData
+  );
+
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'successfully update data',
+    data: result,
+  });
+});
+//====database update from database ========^
 
 export const AcademicDepartmentController = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
+  updateDepartment,
 };

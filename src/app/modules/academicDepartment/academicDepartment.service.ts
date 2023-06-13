@@ -86,13 +86,34 @@ const getAllDepartments = async (
 const getSingleDepartment = async (
   id: string
 ): Promise<IAcademicDeartment | null> => {
-  const result = await AcademicDepartment.findById(id);
+  const result = await AcademicDepartment.findById(id).populate(
+    'academicFaculty'
+  );
   return result;
 };
 //======get single data from database =======^
+
+//======get update data from database =======>
+
+const updateDepartment = async (
+  id: string,
+  payload: Partial<IAcademicDeartment>
+): Promise<IAcademicDeartment | null> => {
+  const result = await AcademicDepartment.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+    }
+  ).populate('academicFaculty');
+  return result;
+};
+
+//======get update data from database =======^
 
 export const AcademicDepartmentService = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
+  updateDepartment,
 };
