@@ -1,3 +1,3 @@
 export const academicFacultySharchAbleFields = ['title'];
 
-export const academicFacultyFilterAbleFields = ['searchTerm'];
+export const academicFacultyFilterAbleFields = ['searchTerm', 'title'];
