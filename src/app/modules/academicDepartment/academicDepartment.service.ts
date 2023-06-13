@@ -82,7 +82,17 @@ const getAllDepartments = async (
 };
 //get all data and pagenations ==================^
 
+//======get single data from database =======>
+const getSingleDepartment = async (
+  id: string
+): Promise<IAcademicDeartment | null> => {
+  const result = await AcademicDepartment.findById(id);
+  return result;
+};
+//======get single data from database =======^
+
 export const AcademicDepartmentService = {
   createDepartment,
   getAllDepartments,
+  getSingleDepartment,
 };
