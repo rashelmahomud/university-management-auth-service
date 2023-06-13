@@ -1,4 +1,12 @@
-import { IAcademicDeartment } from './academicDepartment.interface';
+import { SortOrder } from 'mongoose';
+import { PagenationHelpers } from '../../../helpers/pagenationHelpers';
+import { IGenericResponce } from '../../../interfaces/common';
+import { IPagenationOption } from '../../../interfaces/pagenations';
+import { academicDeartmentSharchAbleFields } from './academicDepartment.constent';
+import {
+  IAcademicDeartment,
+  IAcademicDevelopmentFiltes,
+} from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
 // import { academicFacultySharchAbleFields } from './academicFaculty.constent';
 
@@ -14,6 +22,67 @@ const createDepartment = async (
 
 //===========post department data create ===^
 
+//get all data and pagenations ==================>
+const getAllDepartments = async (
+  filters: IAcademicDevelopmentFiltes, //search for this code
+  pagenationOptions: IPagenationOption
+): Promise<IGenericResponce<IAcademicDeartment[]>> => {
+  const { searchTerm, ...filtersData } = filters;
+  const { page, limit, skip, sortBy, sortOrder } =
+    PagenationHelpers.calculatepagenation(pagenationOptions);
+
+  //search for this code =========
+  const andCondition = [];
+
+  if (searchTerm) {
+    andCondition.push({
+      $or: academicDeartmentSharchAbleFields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    });
+  }
+
+  //=============================^
+
+  if (Object.keys(filtersData).length) {
+    andCondition.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
+
+  const sortCondition: { [key: string]: SortOrder } = {};
+
+  if (sortBy && sortOrder) {
+    sortCondition[sortBy] = sortOrder;
+  }
+
+  const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
+
+  const result = await AcademicDepartment.find(whereCondition)
+    .populate('academicFaculty')
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit);
+
+  const total = await AcademicDepartment.countDocuments();
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
+};
+//get all data and pagenations ==================^
+
 export const AcademicDepartmentService = {
   createDepartment,
+  getAllDepartments,
 };

@@ -3,7 +3,11 @@ import httpStatus from 'http-status';
 import CatchAsync from '../../../shared/catchAsync';
 import sendResponce from '../../../shared/sendResponce';
 import { AcademicDepartmentService } from './academicDepartment.service';
+import pick from '../../../shared/pick';
+import { academicDeartmentFilterAbleFields } from './academicDepartment.constent';
+import { pagenationFields } from '../../../conestent/pagenation';
 
+//==============create deparment data ===============>
 const createDepartment = CatchAsync(
   //this file for try catch code have CatchAsync.ts file a
   async (req: Request, res: Response) => {
@@ -21,7 +25,30 @@ const createDepartment = CatchAsync(
     });
   }
 );
+//==============create deparment data ===============^
+
+//==========get department all data ================>
+const getAllDepartments = CatchAsync(async (req: Request, res: Response) => {
+  //get all data
+  const filters = pick(req.query, academicDeartmentFilterAbleFields); //search for this code
+  const pagenationOptions = pick(req.query, pagenationFields);
+
+  const result = await AcademicDepartmentService.getAllDepartments(
+    filters,
+    pagenationOptions
+  );
+
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'create department in successfully Get',
+    meta: result.meta,
+    data: result.data,
+  });
+});
+//==========get department all data ================^
 
 export const AcademicDepartmentController = {
   createDepartment,
+  getAllDepartments,
 };
