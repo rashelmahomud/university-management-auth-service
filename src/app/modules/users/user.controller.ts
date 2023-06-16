@@ -4,11 +4,11 @@ import CatchAsync from '../../../shared/catchAsync';
 import sendResponce from '../../../shared/sendResponce';
 import httpStatus from 'http-status';
 
-const createUser: RequestHandler = CatchAsync(
+const createStudent: RequestHandler = CatchAsync(
   //this file for try catch code have CatchAsync.ts file a
   async (req: Request, res: Response) => {
-    const { user } = req.body;
-    const result = await userService.createUser(user);
+    const { student, ...userData } = req.body;
+    const result = await userService.createStudent(student, userData);
 
     sendResponce(res, {
       //this code daynamically handel for have a sendResponce.ts file.
@@ -20,5 +20,5 @@ const createUser: RequestHandler = CatchAsync(
   }
 );
 export const userController = {
-  createUser,
+  createStudent,
 };
