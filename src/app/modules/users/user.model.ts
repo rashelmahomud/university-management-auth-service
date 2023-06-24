@@ -45,6 +45,35 @@ const userSchema = new Schema<IUser>(
   }
 );
 
+// userSchema.methods.isUserExist = async function (
+//   id: string
+// ): Promise<Partial<IUser | null>> {
+//   const user = await User.findOne(
+//     { id },
+//     { id: 1, password: 1, needsPasswordChange: 1 }
+//   );
+//   return user;
+// };
+
+userSchema.statics.isUserExist = async function (
+  id: string
+): Promise<Pick<
+  IUser,
+  'id' | 'password' | 'needsPasswordChange' | 'role'
+> | null> {
+  return await User.findOne(
+    { id },
+    { id: 1, password: 1, role: 1, needsPasswordChange: 1 }
+  );
+};
+
+userSchema.statics.isPasswordMetchted = async function (
+  givePassword: string,
+  savePassword: string
+): Promise<boolean> {
+  return await bcrypt.compare(givePassword, savePassword);
+};
+
 // password hassign code and setup here..
 userSchema.pre('save', async function (next) {
   const user = this;

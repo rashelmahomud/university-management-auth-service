@@ -12,4 +12,12 @@ export default {
   default_admin_pass: process.env.DEFAULT_ADMIN_PASS,
 
   bcrypt_salt_round: process.env.BCRYPT_SALT_ROUNDS,
+
+  jwt: {
+    jwt_secret: process.env.JWT_SECRET,
+    jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
+    jwt_expirest_id: process.env.JWT_EXPIRES_IN,
+    jwt_algoridam: process.env.JWT_ALGORITHOM,
+    jwt_refresh_expires: process.env.JWT_REFRESH_EXPIRES_IN,
+  },
 };
