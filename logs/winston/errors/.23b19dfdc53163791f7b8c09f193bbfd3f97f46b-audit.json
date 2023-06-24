@@ -6,11 +6,6 @@
     "auditLog": "F:\\JONKAE Mahomud Cours\\NEXT-LEVEL-WEB-DEVELOPMENT\\PROJECT\\university-management\\logs\\winston\\errors\\.23b19dfdc53163791f7b8c09f193bbfd3f97f46b-audit.json",
     "files": [
         {
-            "date": 1686384055554,
-            "name": "F:\\JONKAE Mahomud Cours\\NEXT-LEVEL-WEB-DEVELOPMENT\\PROJECT\\university-management\\logs\\winston\\errors\\nu-2023-10-06-14-error.log",
-            "hash": "a2b815efe995b98c21cb32e3730249aaf0e66b97da578f81ff0dffc7a6311d76"
-        },
-        {
             "date": 1686445596689,
             "name": "F:\\JONKAE Mahomud Cours\\NEXT-LEVEL-WEB-DEVELOPMENT\\PROJECT\\university-management\\logs\\winston\\errors\\nu-2023-11-06-07-error.log",
             "hash": "cebccad049fc1ba3b6f92ac3ae5b125a9fd9994533e51c4d229bd776add01e1c"
@@ -204,6 +199,11 @@
             "date": 1687590868745,
             "name": "F:\\JONKAE Mahomud Cours\\NEXT-LEVEL-WEB-DEVELOPMENT\\PROJECT\\university-management\\logs\\winston\\errors\\nu-2023-24-06-13-error.log",
             "hash": "b5b6bc7d4e21ae650993d7bc53b1ef664a2ed403413ee37e840ba3644f84e1c2"
+        },
+        {
+            "date": 1687601634837,
+            "name": "F:\\JONKAE Mahomud Cours\\NEXT-LEVEL-WEB-DEVELOPMENT\\PROJECT\\university-management\\logs\\winston\\errors\\nu-2023-24-06-16-error.log",
+            "hash": "bae50d9265bf7eb0a3734a76e5dd05c8a297d6eb1503bb36122f2b27707e3049"
         }
     ],
     "hashType": "sha256"
