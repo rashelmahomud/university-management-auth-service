@@ -11,6 +11,16 @@ const loginZodSchema = z.object({
   }),
 });
 
+//refresh token validations
+const refreshTokenZodSchema = z.object({
+  cookies: z.object({
+    refreshToken: z.string({
+      required_error: 'refreshToken is required.',
+    }),
+  }),
+});
+
 export const AuthValidation = {
   loginZodSchema,
+  refreshTokenZodSchema,
 };

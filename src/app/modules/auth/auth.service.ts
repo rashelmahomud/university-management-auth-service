@@ -1,10 +1,15 @@
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import { User } from '../users/user.model';
-import { ILoginUserResponce, IUserLogin } from './auth.interface';
+import {
+  ILoginUserResponce,
+  IRefreshResponceToken,
+  IUserLogin,
+} from './auth.interface';
 import { Secret } from 'jsonwebtoken';
 import config from '../../../config';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
+
 const userLogin = async (payload: IUserLogin): Promise<ILoginUserResponce> => {
   const { id, password } = payload;
   //check user exise
@@ -36,9 +41,6 @@ const userLogin = async (payload: IUserLogin): Promise<ILoginUserResponce> => {
     config.jwt.jwt_refresh_secret as Secret,
     config.jwt.jwt_refresh_expires as string
   );
-
-  console.log({ accessToken, refreshToken, needsPasswordChange });
-
   return {
     accessToken,
     refreshToken,
@@ -46,6 +48,42 @@ const userLogin = async (payload: IUserLogin): Promise<ILoginUserResponce> => {
   };
 };
 
+const refreshTokenService = async (
+  token: string
+): Promise<IRefreshResponceToken> => {
+  let verifyedToken;
+  try {
+    verifyedToken = jwtHelpers.verifyToken(
+      token,
+      config.jwt.jwt_refresh_secret as Secret
+    );
+  } catch (error) {
+    //error handel here
+    throw new ApiError(httpStatus.FORBIDDEN, 'invalide refreshToken');
+  }
+
+  const { userId } = verifyedToken;
+
+  const isUserExist = await User.isUserExist(userId);
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'user does not working');
+  }
+
+  const newAccessToken = jwtHelpers.createToken(
+    {
+      id: isUserExist.id,
+      role: isUserExist.role,
+    },
+    config.jwt.jwt_secret as Secret,
+    config.jwt.jwt_expirest_id as string
+  );
+
+  return {
+    accessToken: newAccessToken,
+  };
+};
+
 export const AuthService = {
   userLogin,
+  refreshTokenService,
 };

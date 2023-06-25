@@ -3,7 +3,7 @@ import CatchAsync from '../../../shared/catchAsync';
 import sendResponce from '../../../shared/sendResponce';
 import httpStatus from 'http-status';
 import { AuthService } from './auth.service';
-import { ILoginUserResponce } from './auth.interface';
+import { ILoginUserResponce, IRefreshResponceToken } from './auth.interface';
 import config from '../../../config';
 
 const loginUser = CatchAsync(async (req: Request, res: Response) => {
@@ -15,7 +15,6 @@ const loginUser = CatchAsync(async (req: Request, res: Response) => {
     secure: config.env === 'production',
     httpOnly: true,
   };
-
   res.cookie('refreshToken', refreshToken, cookeOptions);
 
   // delete result.refreshToken;
@@ -28,6 +27,24 @@ const loginUser = CatchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const refreshToken = CatchAsync(async (req: Request, res: Response) => {
+  const { refreshToken } = req.cookies;
+  const result = await AuthService.refreshTokenService(refreshToken);
+
+  const cookeOptions = {
+    secure: config.env === 'production',
+    httpOnly: true,
+  };
+  res.cookie('refreshToken', refreshToken, cookeOptions);
+  sendResponce<IRefreshResponceToken>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user login successfully',
+    data: result,
+  });
+});
+
 export const AuthController = {
   loginUser,
+  refreshToken,
 };
