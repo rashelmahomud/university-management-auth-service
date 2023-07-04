@@ -26,7 +26,7 @@ const createFaculty = CatchAsync(
 );
 
 //pagenation work for code>
-const getAllSemesters = CatchAsync(async (req: Request, res: Response) => {
+const getAllFaculty = CatchAsync(async (req: Request, res: Response) => {
   //get all data
   const filters = pick(req.query, academicFacultyFilterAbleFields); //search for this code
   const pagenationOptions = pick(req.query, pagenationFields);
@@ -90,7 +90,7 @@ const deleteFaculy = CatchAsync(async (req: Request, res: Response) => {
 
 export const AcademicFacultyController = {
   createFaculty,
-  getAllSemesters,
+  getAllFaculty,
   getSingleFaculty,
   updateFaculy,
   deleteFaculy,
