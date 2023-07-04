@@ -3,7 +3,11 @@ import CatchAsync from '../../../shared/catchAsync';
 import sendResponce from '../../../shared/sendResponce';
 import httpStatus from 'http-status';
 import { AuthService } from './auth.service';
-import { ILoginUserResponce, IRefreshResponceToken } from './auth.interface';
+import {
+  IChangePasswod,
+  ILoginUserResponce,
+  IRefreshResponceToken,
+} from './auth.interface';
 import config from '../../../config';
 
 const loginUser = CatchAsync(async (req: Request, res: Response) => {
@@ -47,11 +51,10 @@ const refreshToken = CatchAsync(async (req: Request, res: Response) => {
 //change password =========>
 const changePassword = CatchAsync(async (req: Request, res: Response) => {
   const user = req.user;
-  console.log(req.user);
 
   const { ...passwordData } = req.body;
   const result = await AuthService.changePassword(user, passwordData);
-  sendResponce<ILoginUserResponce>(res, {
+  sendResponce<IChangePasswod>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'user password change successfully',
